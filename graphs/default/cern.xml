@@ -1,0 +1,28 @@
+<?xml version="1.0" standalone="no"?>
+
+<graph>
+
+	<description>
+        http://root.cern.ch
+        http://proj-clhep.web.cern.ch/proj-clhep/
+        http://geant4.web.cern.ch/geant4/
+	</description>
+
+	<copyright>
+	Copyright (c) 2000 - 2012 The Regents of the University of California.
+	All rights reserved. Rocks(r) v5.5/v6.0 www.rocksclusters.org
+	
+	</copyright>
+
+	<changelog>
+	$Log$
+	</changelog>
+
+        <edge from="base">
+          <to>cern-common</to>
+        </edge>
+        <order head="base">
+          <tail>cern-common</tail>
+        </order>
+
+</graph>
