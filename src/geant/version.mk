@@ -1,0 +1,11 @@
+PKGROOT		= /opt/cern/geant
+NAME		= geant
+VERSION		= 4.9.6.p02
+RELEASE		= 1
+TARBALL_POSTFIX	= tar.gz
+
+SRC_SUBDIR	= geant
+GEANT_NAME  = clhep
+GEANT_VERSION  = 4.9.6.p02
+
+TGZ_PKGS = $(GEANT_NAME)$(GEANT_VERSION).$(TARBALL_POSTFIX)
