@@ -58,7 +58,6 @@
 
 REDHAT.ROOT = $(CURDIR)/../../
 
-PKGROOT=/opt/cern/geant
 -include $(ROCKSROOT)/etc/Rules.mk
 include Rules.mk
 include pull.mk
@@ -68,9 +67,7 @@ build: $(SRC_DIRS)
 	mkdir -p $(PKGROOT)
 	mount --bind $(ROOT)/$(PKGROOT) $(PKGROOT)
 	( \
-                tar xvzf $(NAME)$(VERSION).$(TARBALL_POSTFIX); \
-                tar xvzf $(G4EMLOW_DATA_NAME).$(G4EMLOW_DATA_VERSION).$(TARBALL_POSTFIX); \
-               cd $(NAME)$(VERSION); \
+               cd $(GEANT_DIR); \
                 . /etc/profile.d/modules.sh; \
                 module load  cmake; \
                 mkdir build; \
@@ -87,12 +84,12 @@ install::
 	(  \
                 . /etc/profile.d/modules.sh; \
                 module load  cmake; \
-		cd $(NAME)$(VERSION)/build; \
+		cd $(GEANT_DIR)/build; \
                 make; \
 		make install; \
                 cd ../..; \
-                cp -r $(GEANT_NAME)$(GEANT_VERSION)/examples/* $(PKGROOT)/examples; \
-                cp -r $(G4EMLOW_DATA_NAME)$(G4EMLOW_DATA_VERSION)/* $(PKGROOT)/data; \
+                cp -r $(GEANT_DIR)/examples/* $(PKGROOT)/examples; \
+                cp -r $(G4EMLOW_NAME)$(G4EMLOW_VERSION)/* $(PKGROOT)/data; \
                 cd $(PKGROOT)/examples/novice/N06; \
                 mkdir build; \
                 cd build; \
@@ -104,5 +101,5 @@ install::
 	@echo "::: Package $(NAME) install complete :::"
 
 clean::
-	rm -rf $(NAME)$(VERSION) $(G4EMLOW_DATA_NAME)$(G4EMLOW_DATA_VERSION)
+	rm -rf $(SRC_DIRS)
 	-umount $(PKGROOT)
