@@ -1,6 +1,6 @@
 NAME               = root
-VERSION	           = 5.34.11
-RELEASE	           = 1
+VERSION            = 5.34.11
+RELEASE            = 1
 PKGROOT            = /opt/cern/root
 
 SRC_SUBDIR         = root
