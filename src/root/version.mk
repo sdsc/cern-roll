@@ -1,12 +1,14 @@
-PKGROOT		= /opt/cern/root
-NAME		= root
-VERSION		= 5.34.11
-RELEASE		= 1
-TARBALL_POSTFIX	= tar.gz
+NAME               = root
+VERSION	           = 5.34.11
+RELEASE	           = 1
+PKGROOT            = /opt/cern/root
 
-ROOT_NAME = root
-ROOT_VERSION=5.34.11
+SRC_SUBDIR         = root
 
-SRC_SUBDIR	= root
+SOURCE_NAME        = $(NAME)
+SOURCE_VERSION     = $(VERSION)
+SOURCE_SUFFIX      = tar.gz
+SOURCE_PKG         = $(SOURCE_NAME)_v$(SOURCE_VERSION).source.$(SOURCE_SUFFIX)
+SOURCE_DIR         = $(SOURCE_PKG:%.$(SOURCE_SUFFIX)=%)
 
-TGZ_PKGS = $(ROOT_NAME)_v$(ROOT_VERSION).source.$(TARBALL_POSTFIX)
+TAR_GZ_PKGS        = $(SOURCE_PKG)
