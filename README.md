@@ -1,21 +1,16 @@
 # SDSC cern-roll
 
-Th SDSC cern-roll contains the cern suite of software
-
-
-
-clhep: (Class Library for High Energy Physics). Math libraries for vector math, random number generation and linear algebra
-The Triton gnu-roll bundles a number of tools into a single Rocks(r) roll and provides a Modules interface to allow loading of the tool paths into the user environment.
+The SDSC cern-roll bundles software tools published by [CERN](http://www.cern.ch) into a Rocks(r) roll that can be installed easily on a Rocks(r) cluster.
 
 ## Roll Dependencies
 
-The cern-roll requires that you first build and install the [gnucompiler-roll](https://github.com/sdsc/gnucompiler-roll) and the [gnu-roll] (https://github.com/sdsc/gnucompiler-roll) onto your Rocks(r) frontend or development appliance.
+The cern-roll requires that you first build and install the [gnucompiler-roll](https://github.com/sdsc/gnucompiler-roll) and the [gnu-roll](https://github.com/sdsc/gnucompiler-roll) onto your Rocks(r) frontend or development appliance.
 
 ## Installed Programs
 
 ### root
 
-- root  - [root](http://root.cern.ch) packages for curve fitting, plotting, high energy physics computationsand data analysis
+- root - [root](http://root.cern.ch) packages for curve fitting, plotting, high energy physics computations and data analysis
 
 
 ### geant
@@ -26,6 +21,5 @@ The cern-roll requires that you first build and install the [gnucompiler-roll](h
 
 
 ##  Module File
-- cern-modules Installs/configures module files for the cern suite.
-
+- cern-modules installs/configures module files for the cern suite.
 
