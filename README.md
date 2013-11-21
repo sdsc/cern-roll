@@ -1,5 +1,3 @@
-# SDSC HPC Group Rocks® roll template
-
 This roll contains the cern suite of software:
 
 root: packages for for curve fitting, plotting, high energy physics computationsand data analysis
