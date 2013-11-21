@@ -63,16 +63,15 @@ PKGROOT=/opt/cern/clhep
 include Rules.mk
 include pull.mk
 
-#build: $(SRC_DIRS)
-build: 
+build: $(SRC_DIRS)
 	( \
-                tar xvf $(NAME)-$(VERSION).$(TARBALL_POSTFIX); \
-                . /etc/profile.d/modules.sh; \
-                module load  cmake; \
-		cd $(VERSION);				\
-                mkdir build; \
-                cd build; \
-                cmake -DCMAKE_C_COMPILER=`which gcc` -DCMAKE_CXX_COMPILER=`which g++` -DCMAKE_INSTALL_PREFIX=$(PKGROOT)  ../CLHEP ; \
+             tar xvf $(NAME)-$(VERSION).$(TARBALL_POSTFIX); \
+             . /etc/profile.d/modules.sh; \
+             module load  cmake; \
+             cd $(VERSION);\
+             mkdir build; \
+             cd build; \
+             cmake -DCMAKE_C_COMPILER=`which gcc` -DCMAKE_CXX_COMPILER=`which g++` -DCMAKE_INSTALL_PREFIX=$(PKGROOT)  ../CLHEP ; \
 	)
 	@echo "::: Package $(NAME) build complete :::"
 	
@@ -81,11 +80,11 @@ install::
 	mkdir -p $(PKGROOT)
 	mount  --bind $(ROOT)/$(PKGROOT) $(PKGROOT)
 	(  \
-		cd $(VERSION)/build; \
-                make; \
-		make install; \
-                cp Matrix/test/test* $(ROOT)/$(PKGROOT)/tests; \
-                cp ../CLHEP/Matrix/test/testMatrix.output $(ROOT)/$(PKGROOT)/tests \
+              cd $(VERSION)/build; \
+               make; \
+make install; \
+               cp Matrix/test/test* $(ROOT)/$(PKGROOT)/tests; \
+               cp ../CLHEP/Matrix/test/testMatrix.output $(ROOT)/$(PKGROOT)/tests \
 	)
 	@echo "::: Package $(NAME) install complete :::"
 	umount $(PKGROOT)
