@@ -1,7 +1,7 @@
 PKGROOT		= /opt/cern/clhep
 NAME		= clhep
 VERSION		= 2.1.3.1
-RELEASE		= 1
+RELEASE		= 0
 TARBALL_POSTFIX	= tgz
 
 SRC_SUBDIR	= clhep
@@ -9,3 +9,4 @@ CLHEP_NAME  = clhep
 CLHEP_VERSION  = 2.1.3.1
 
 TGZ_PKGS = $(CLHEP_NAME)-$(CLHEP_VERSION).$(TARBALL_POSTFIX)
+RPM.EXTRAS         = AutoReq:No

@@ -1,6 +1,6 @@
 NAME              = geant
 VERSION           = 4.9.6.p02
-RELEASE           = 1
+RELEASE           = 0
 PKGROOT           = /opt/cern/geant
 
 SRC_SUBDIR        = geant
@@ -18,3 +18,4 @@ G4EMLOW_PKG        = $(G4EMLOW_NAME).$(G4EMLOW_VERSION).$(G4EMLOW_SUFFIX)
 G4EMLOW_DIR        = $(G4EMLOW_PKG:%.$(G4EMLOW_SUFFIX)=%)
 
 TAR_GZ_PKGS        = $(GEANT_PKG) $(G4EMLOW_PKG)
+RPM.EXTRAS         = AutoReq:No

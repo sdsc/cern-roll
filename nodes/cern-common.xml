@@ -1,0 +1,30 @@
+<?xml version="1.0" standalone="no"?>
+
+<kickstart>
+
+
+	<description>
+        http://root.cern.ch
+        http://proj-clhep.web.cern.ch/proj-clhep/
+        http://geant4.web.cern.ch/geant4/
+	</description>
+
+	<copyright>
+	Copyright (c) 2000 - 2012 The Regents of the University of California.
+	All rights reserved. Rocks(r) v5.5/v6.0 www.rocksclusters.org
+	
+	</copyright>
+
+	<changelog>
+	$Log$
+	</changelog>
+
+	<package>root</package>
+	<package>geant</package>
+	<package>clhep</package>
+	<package>cern-modules</package>
+	<package>cern-roll-test</package>
+	<package>roll-cern-usersguide</package>
+
+
+</kickstart>

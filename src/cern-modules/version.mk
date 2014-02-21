@@ -1,3 +1,4 @@
 NAME    	= cern-modules
 VERSION 	= 1.0
-RELEASE 	= 7
+RELEASE 	= 0
+RPM.EXTRAS         = AutoReq:No
