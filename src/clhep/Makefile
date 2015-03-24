@@ -89,8 +89,8 @@ build: $(SRC_DIRS)
 	@echo "::: Package $(NAME) build complete :::"
 	
 install::
-	$(PKGROOT_BIND_MOUNT)
 	mkdir -p $(ROOT)/$(PKGROOT)/tests
+	$(PKGROOT_BIND_MOUNT)
 	(  \
               cd $(VERSION)/build; \
                make; \
@@ -103,4 +103,4 @@ make install; \
 	@echo "::: Package $(NAME) install complete :::"
 
 clean::
-	rm -rf $(VERSION) $(PKGROOT)
+	rm -rf $(VERSION) $(PKGROOT) DESCRIPTION LICENSE
