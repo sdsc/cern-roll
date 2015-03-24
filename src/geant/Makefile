@@ -80,9 +80,10 @@ LICENSE: $(SRC_DIRS)
 
 
 build: $(SRC_DIRS)
+	mkdir -p $(ROOT)/$(PKGROOT)
 	$(PKGROOT_BIND_MOUNT);
 	( \
-               cd $(GEANT_DIR); \
+               cd $(SOURCE_DIR); \
                $(MODULE_LOAD_CMAKE); \
                 mkdir build; \
                 cd build; \
@@ -97,11 +98,11 @@ install::
 	mkdir -p $(ROOT)/$(PKGROOT)/examples
 	(  \
                 $(MODULE_LOAD_CMAKE); \
-		cd $(GEANT_DIR)/build; \
+		cd $(SOURCE_DIR)/build; \
                 make; \
 		make install; \
                 cd ../..; \
-                cp -r $(GEANT_DIR)/examples/* $(PKGROOT)/examples; \
+                cp -r $(SOURCE_DIR)/examples/* $(PKGROOT)/examples; \
                 cp -r $(G4EMLOW_NAME)$(G4EMLOW_VERSION)/* $(PKGROOT)/data; \
                 cd $(PKGROOT)/examples/novice/N06; \
                 mkdir build; \
