@@ -58,10 +58,25 @@
 
 REDHAT.ROOT = $(CURDIR)/../../
 
-PKGROOT=/opt/cern/root
 -include $(ROCKSROOT)/etc/Rules.mk
-include Rules.mk
-include pull.mk
+include $(SDSCDEVEL)/Pull.mk
+include $(SDSCDEVEL)/Rules.mk
+
+
+ROLLCOMPILER = gnu
+COMPILERNAME = gnu
+$(NAME).spec: DESCRIPTION LICENSE
+
+DESCRIPTION:
+	$(MODULE_LOAD_CC); \
+	( \
+	  $(DESCRIBE_PKG); \
+	  $(DESCRIBE_CC); \
+	) > $@
+
+LICENSE: $(SRC_DIRS)
+	$(CHECK_LICENSE_FILES)
+	echo gplv2.1 > $@
 
 build: $(SRC_DIRS)
 	( \
@@ -73,8 +88,7 @@ build: $(SRC_DIRS)
 	
 install::
 	mkdir -p $(ROOT)/$(PKGROOT)/test
-	mkdir -p $(PKGROOT)
-	mount --bind $(ROOT)/$(PKGROOT) $(PKGROOT)
+	$(PKGROOT_BIND_MOUNT)
 	( \
               cd $(NAME); \
               $(MAKE) install;\
@@ -84,9 +98,9 @@ install::
               make; \
               cp -r * $(PKGROOT)/test \
 	)
+	$(PKGROOT_BIND_UMOUNT)
+	$(INSTALL_LICENSE_FILES)
 	@echo "::: Package $(NAME) install complete :::"
-	umount $(PKGROOT)
 
 clean::
-	rm -rf $(NAME)
-	-umount $(PKGROOT)
+	rm -rf $(SOURCE_DIR)

@@ -1,5 +1,5 @@
 NAME              = geant
-VERSION           = 4.9.6.p02
+VERSION           = 4.10.01
 RELEASE           = 0
 PKGROOT           = /opt/cern/geant
 

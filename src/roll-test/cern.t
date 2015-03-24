@@ -67,4 +67,4 @@ SKIP: {
      'cern version module link created');
 
 }
-#`rm -fr $TESTFILE*`;
+`rm -fr $TESTFILE*`;

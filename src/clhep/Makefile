@@ -57,17 +57,30 @@
 # $Log$
 
 REDHAT.ROOT = $(CURDIR)/../../
-
-PKGROOT=/opt/cern/clhep
 -include $(ROCKSROOT)/etc/Rules.mk
-include Rules.mk
-include pull.mk
+include $(SDSCDEVEL)/Pull.mk
+include $(SDSCDEVEL)/Rules.mk
+
+
+ROLLCOMPILER = gnu
+COMPILERNAME = gnu
+$(NAME).spec: DESCRIPTION LICENSE
+
+DESCRIPTION:
+	$(MODULE_LOAD_CC); \
+	( \
+	  $(DESCRIBE_PKG); \
+	  $(DESCRIBE_CC); \
+	) > $@
+
+LICENSE: $(SRC_DIRS)
+	$(CHECK_LICENSE_FILES)
+	echo GPLv3+ > $@
 
 build: $(SRC_DIRS)
 	( \
              tar xvf $(NAME)-$(VERSION).$(TARBALL_POSTFIX); \
-             . /etc/profile.d/modules.sh; \
-             module load  cmake; \
+             $(MODULE_LOAD_CMAKE); \
              cd $(VERSION);\
              mkdir build; \
              cd build; \
@@ -76,9 +89,8 @@ build: $(SRC_DIRS)
 	@echo "::: Package $(NAME) build complete :::"
 	
 install::
+	$(PKGROOT_BIND_MOUNT)
 	mkdir -p $(ROOT)/$(PKGROOT)/tests
-	mkdir -p $(PKGROOT)
-	mount  --bind $(ROOT)/$(PKGROOT) $(PKGROOT)
 	(  \
               cd $(VERSION)/build; \
                make; \
@@ -86,9 +98,9 @@ make install; \
                cp Matrix/test/test* $(ROOT)/$(PKGROOT)/tests; \
                cp ../CLHEP/Matrix/test/testMatrix.output $(ROOT)/$(PKGROOT)/tests \
 	)
+	$(PKGROOT_BIND_UMOUNT)
+	$(INSTALL_LICENSE_FILES)
 	@echo "::: Package $(NAME) install complete :::"
-	umount $(PKGROOT)
 
 clean::
 	rm -rf $(VERSION) $(PKGROOT)
-	-umount $(PKGROOT)

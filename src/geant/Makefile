@@ -59,31 +59,44 @@
 REDHAT.ROOT = $(CURDIR)/../../
 
 -include $(ROCKSROOT)/etc/Rules.mk
-include Rules.mk
-include pull.mk
+include $(SDSCDEVEL)/Pull.mk
+include $(SDSCDEVEL)/Rules.mk
+
+
+ROLLCOMPILER = gnu
+COMPILERNAME = gnu
+$(NAME).spec: DESCRIPTION LICENSE
+
+DESCRIPTION:
+	$(MODULE_LOAD_CC); \
+	( \
+	  $(DESCRIBE_PKG); \
+	  $(DESCRIBE_CC); \
+	) > $@
+
+LICENSE: $(SRC_DIRS)
+	$(CHECK_LICENSE_FILES)
+	echo Geant4 > $@
+
 
 build: $(SRC_DIRS)
-	mkdir -p $(ROOT)/$(PKGROOT)
-	mkdir -p $(PKGROOT)
-	mount --bind $(ROOT)/$(PKGROOT) $(PKGROOT)
+	$(PKGROOT_BIND_MOUNT);
 	( \
                cd $(GEANT_DIR); \
-                . /etc/profile.d/modules.sh; \
-                module load  cmake; \
+               $(MODULE_LOAD_CMAKE); \
                 mkdir build; \
                 cd build; \
                 cmake -DCMAKE_C_COMPILER=`which gcc` -DCMAKE_CXX_COMPILER=`which g++` -DCMAKE_INSTALL_PREFIX=$(PKGROOT) ..  \
 	)
-	umount $(PKGROOT)
+	$(PKGROOT_BIND_UMOUNT);
 	@echo "::: Package $(NAME) build complete :::"
 	
 install::
+	$(PKGROOT_BIND_MOUNT)
 	mkdir -p $(ROOT)/$(PKGROOT)/data
 	mkdir -p $(ROOT)/$(PKGROOT)/examples
-	mount --bind $(ROOT)/$(PKGROOT) $(PKGROOT)
 	(  \
-                . /etc/profile.d/modules.sh; \
-                module load  cmake; \
+                $(MODULE_LOAD_CMAKE); \
 		cd $(GEANT_DIR)/build; \
                 make; \
 		make install; \
@@ -96,10 +109,9 @@ install::
                 cmake -DGeant4_DIR=/opt/cern/geant/lib64/Geant4-9.6.2 -DCMAKE_C_COMPILER=`which gcc` -DCMAKE_CXX_COMPILER=`which g++` -DCMAKE_PREFIX_PATH=$(PKGROOT) ..; \
                 make \
          )
-	umount $(PKGROOT)
-
+	$(PKGROOT_BIND_UMOUNT)
+	$(INSTALL_LICENSE_FILES)
 	@echo "::: Package $(NAME) install complete :::"
 
 clean::
 	rm -rf $(SRC_DIRS)
-	-umount $(PKGROOT)

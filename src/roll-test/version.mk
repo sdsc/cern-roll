@@ -1,4 +1,6 @@
-NAME	= cern-roll-test
-VERSION	= 1.0
-RELEASE	= 0
+NAME       = sdsc-cern-roll-test
+VERSION    = 1
+RELEASE    = 0
+PKGROOT    = /root/rolltests
+
 RPM.EXTRAS = AutoReq:No
