@@ -80,8 +80,6 @@ LICENSE: $(SRC_DIRS)
 
 
 build: $(SRC_DIRS)
-	mkdir -p $(ROOT)/$(PKGROOT)
-	$(PKGROOT_BIND_MOUNT);
 	( \
                cd $(SOURCE_DIR); \
                $(MODULE_LOAD_CMAKE); \
@@ -89,13 +87,12 @@ build: $(SRC_DIRS)
                 cd build; \
                 cmake -DCMAKE_C_COMPILER=`which gcc` -DCMAKE_CXX_COMPILER=`which g++` -DCMAKE_INSTALL_PREFIX=$(PKGROOT) ..  \
 	)
-	$(PKGROOT_BIND_UMOUNT);
 	@echo "::: Package $(NAME) build complete :::"
 	
 install::
-	$(PKGROOT_BIND_MOUNT)
 	mkdir -p $(ROOT)/$(PKGROOT)/data
 	mkdir -p $(ROOT)/$(PKGROOT)/examples
+	$(PKGROOT_BIND_MOUNT)
 	(  \
                 $(MODULE_LOAD_CMAKE); \
 		cd $(SOURCE_DIR)/build; \
