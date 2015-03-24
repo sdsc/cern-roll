@@ -101,7 +101,7 @@ install::
                 cd ../..; \
                 cp -r $(SOURCE_DIR)/examples/* $(PKGROOT)/examples; \
                 cp -r $(G4EMLOW_NAME)$(G4EMLOW_VERSION)/* $(PKGROOT)/data; \
-                cd $(PKGROOT)/examples/novice/N06; \
+                cd $(PKGROOT)/examples/basic/B5; \
                 mkdir build; \
                 cd build; \
                 cmake -DGeant4_DIR=/opt/cern/geant/lib64/Geant4-9.6.2 -DCMAKE_C_COMPILER=`which gcc` -DCMAKE_CXX_COMPILER=`which g++` -DCMAKE_PREFIX_PATH=$(PKGROOT) ..; \

@@ -80,7 +80,7 @@ LICENSE: $(SRC_DIRS)
 
 build: $(SRC_DIRS)
 	( \
-            cd $(NAME);   \
+            cd $(SOURCE_DIR);   \
             ./configure --prefix=$(PKGROOT) --with-xpm-libdir=/usr/lib64 --enable-minuit2 --enable-builtin-pcre;  \
             $(MAKE);  \
 	)
@@ -90,7 +90,7 @@ install::
 	mkdir -p $(ROOT)/$(PKGROOT)/test
 	$(PKGROOT_BIND_MOUNT)
 	( \
-              cd $(NAME); \
+              cd $(SOURCE_DIR); \
               $(MAKE) install;\
               cd test; \
               export PATH=$(PKGROOT)/bin:$${PATH}; \
