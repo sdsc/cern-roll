@@ -53,21 +53,18 @@
 # IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 # 
 # @Copyright@
-#
-# $Log$
 
 REDHAT.ROOT = $(CURDIR)/../../
 -include $(ROCKSROOT)/etc/Rules.mk
 include $(SDSCDEVEL)/Pull.mk
 include $(SDSCDEVEL)/Rules.mk
 
-
 ROLLCOMPILER = gnu
 COMPILERNAME = gnu
+
 $(NAME).spec: DESCRIPTION LICENSE
 
 DESCRIPTION:
-	$(MODULE_LOAD_CC); \
 	( \
 	  $(DESCRIBE_PKG); \
 	  $(DESCRIBE_CC); \
@@ -79,24 +76,25 @@ LICENSE: $(SRC_DIRS)
 
 build: $(SRC_DIRS)
 	( \
-             tar xvf $(NAME)-$(VERSION).$(TARBALL_POSTFIX); \
-             $(MODULE_LOAD_CMAKE); \
-             cd $(VERSION);\
-             mkdir build; \
-             cd build; \
-             cmake -DCMAKE_C_COMPILER=`which gcc` -DCMAKE_CXX_COMPILER=`which g++` -DCMAKE_INSTALL_PREFIX=$(PKGROOT)  ../CLHEP ; \
+	  $(MODULE_LOAD_CMAKE); \
+	  cd $(VERSION);\
+	  mkdir build; \
+	  cd build; \
+	  cmake -DCMAKE_C_COMPILER=`which gcc` \
+	        -DCMAKE_CXX_COMPILER=`which g++` \
+	        -DCMAKE_INSTALL_PREFIX=$(PKGROOT) ../CLHEP; \
 	)
 	@echo "::: Package $(NAME) build complete :::"
 	
 install::
-	mkdir -p $(ROOT)/$(PKGROOT)/tests
+	mkdir -p -m 755 $(ROOT)/$(PKGROOT)/tests
 	$(PKGROOT_BIND_MOUNT)
 	(  \
-              cd $(VERSION)/build; \
-               make; \
-make install; \
-               cp Matrix/test/test* $(ROOT)/$(PKGROOT)/tests; \
-               cp ../CLHEP/Matrix/test/testMatrix.output $(ROOT)/$(PKGROOT)/tests \
+	  cd $(VERSION)/build; \
+	  make; \
+	  make install; \
+	  cp Matrix/test/test* $(ROOT)/$(PKGROOT)/tests; \
+	  cp ../CLHEP/Matrix/test/testMatrix.output $(ROOT)/$(PKGROOT)/tests \
 	)
 	$(PKGROOT_BIND_UMOUNT)
 	$(INSTALL_LICENSE_FILES)
