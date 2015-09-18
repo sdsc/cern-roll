@@ -53,15 +53,12 @@
 # IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 # 
 # @Copyright@
-#
-# $Log$
 
 REDHAT.ROOT = $(CURDIR)/../../
 
 -include $(ROCKSROOT)/etc/Rules.mk
 include $(SDSCDEVEL)/Pull.mk
 include $(SDSCDEVEL)/Rules.mk
-
 
 ROLLCOMPILER = gnu
 COMPILERNAME = gnu
@@ -80,23 +77,27 @@ LICENSE: $(SRC_DIRS)
 
 build: $(SRC_DIRS)
 	( \
-            cd $(SOURCE_DIR);   \
-            ./configure --prefix=$(PKGROOT) --with-xpm-libdir=/usr/lib64 --enable-minuit2 --enable-builtin-pcre;  \
-            $(MAKE);  \
+	  $(MODULE_LOAD_CC); \
+	  cd $(SOURCE_DIR); \
+	  ./configure --prefix=$(PKGROOT) \
+	    --with-xpm-libdir=/usr/lib64 --enable-minuit2 \
+	    --enable-builtin-pcre; \
+	  $(MAKE) -j 16 \
 	)
 	@echo "::: Package $(NAME) build complete :::"
 	
 install::
-	mkdir -p $(ROOT)/$(PKGROOT)/test
+	mkdir -p -m 755 $(ROOT)/$(PKGROOT)/test
 	$(PKGROOT_BIND_MOUNT)
 	( \
-              cd $(SOURCE_DIR); \
-              $(MAKE) install;\
-              cd test; \
-              export PATH=$(PKGROOT)/bin:$${PATH}; \
-              export LD_LIBRARY_PATH=$(PKGROOT)/lib/root:$${LD_LIBRARY_PATH}; \
-              make; \
-              cp -r * $(PKGROOT)/test \
+	  $(MODULE_LOAD_CC); \
+	  cd $(SOURCE_DIR); \
+	  $(MAKE) install; \
+	  cd test; \
+	  export PATH=$(PKGROOT)/bin:$${PATH}; \
+	  export LD_LIBRARY_PATH=$(PKGROOT)/lib/root:$${LD_LIBRARY_PATH}; \
+	  make; \
+	  cp -r * $(PKGROOT)/test \
 	)
 	$(PKGROOT_BIND_UMOUNT)
 	$(INSTALL_LICENSE_FILES)
