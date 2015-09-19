@@ -87,16 +87,17 @@ build: $(SRC_DIRS)
 	@echo "::: Package $(NAME) build complete :::"
 	
 install::
+	NUM_CORES=$(shell "/usr/bin/lscpu | /bin/awk '/^CPU\(s\):/ {print $2}'")
 	mkdir -p -m 755 $(ROOT)/$(PKGROOT)/test
 	$(PKGROOT_BIND_MOUNT)
 	( \
 	  $(MODULE_LOAD_CC); \
 	  cd $(SOURCE_DIR); \
-	  $(MAKE) install; \
+	  $(MAKE) -j$(NUM_CORES) install; \
 	  cd test; \
 	  export PATH=$(PKGROOT)/bin:$${PATH}; \
 	  export LD_LIBRARY_PATH=$(PKGROOT)/lib/root:$${LD_LIBRARY_PATH}; \
-	  make; \
+	  make -j$(NUM_CORES); \
 	  cp -r * $(PKGROOT)/test \
 	)
 	$(PKGROOT_BIND_UMOUNT)

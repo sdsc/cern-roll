@@ -87,14 +87,15 @@ build: $(SRC_DIRS)
 	@echo "::: Package $(NAME) build complete :::"
 	
 install::
+	NUM_CORES=$(shell "/usr/bin/lscpu | /bin/awk '/^CPU\(s\):/ {print $2}'")
 	mkdir -p -m 755 $(ROOT)/$(PKGROOT)/data
 	mkdir -p -m 755 $(ROOT)/$(PKGROOT)/examples
 	$(PKGROOT_BIND_MOUNT)
 	( \
 	  $(MODULE_LOAD_CMAKE); \
 	  cd $(SOURCE_DIR)/build; \
-	  make; \
-	  make install; \
+	  make -j$(NUM_CORES); \
+	  make -j$(NUM_CORES) install; \
 	  cd ../..; \
 	  cp -r $(SOURCE_DIR)/examples/* $(PKGROOT)/examples; \
 	  cp -r $(G4EMLOW_NAME)$(G4EMLOW_VERSION)/* $(PKGROOT)/data; \
@@ -105,7 +106,7 @@ install::
 	        -DCMAKE_C_COMPILER=`which gcc` \
 	        -DCMAKE_CXX_COMPILER=`which g++` \
 	        -DCMAKE_PREFIX_PATH=$(PKGROOT) ..; \
-	  make \
+	  make -j$(NUM_CORES) \
 	)
 	$(PKGROOT_BIND_UMOUNT)
 	$(INSTALL_LICENSE_FILES)

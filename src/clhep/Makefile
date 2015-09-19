@@ -87,12 +87,13 @@ build: $(SRC_DIRS)
 	@echo "::: Package $(NAME) build complete :::"
 	
 install::
+	NUM_CORES=$(shell "/usr/bin/lscpu | /bin/awk '/^CPU\(s\):/ {print $2}'")
 	mkdir -p -m 755 $(ROOT)/$(PKGROOT)/tests
 	$(PKGROOT_BIND_MOUNT)
 	(  \
 	  cd $(VERSION)/build; \
-	  make; \
-	  make install; \
+	  make -j$(NUM_CORES); \
+	  make -j$(NUM_CORES)install; \
 	  cp Matrix/test/test* $(ROOT)/$(PKGROOT)/tests; \
 	  cp ../CLHEP/Matrix/test/testMatrix.output $(ROOT)/$(PKGROOT)/tests \
 	)
