@@ -53,8 +53,6 @@
 # IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 # 
 # @Copyright@
-#
-# $Log$
 
 REDHAT.ROOT = $(CURDIR)/../../
 
@@ -62,13 +60,11 @@ REDHAT.ROOT = $(CURDIR)/../../
 include $(SDSCDEVEL)/Pull.mk
 include $(SDSCDEVEL)/Rules.mk
 
-
 ROLLCOMPILER = gnu
 COMPILERNAME = gnu
 $(NAME).spec: DESCRIPTION LICENSE
 
 DESCRIPTION:
-	$(MODULE_LOAD_CC); \
 	( \
 	  $(DESCRIBE_PKG); \
 	  $(DESCRIBE_CC); \
@@ -78,35 +74,40 @@ LICENSE: $(SRC_DIRS)
 	$(CHECK_LICENSE_FILES)
 	echo Geant4 > $@
 
-
 build: $(SRC_DIRS)
 	( \
-               cd $(SOURCE_DIR); \
-               $(MODULE_LOAD_CMAKE); \
-                mkdir build; \
-                cd build; \
-                cmake -DCMAKE_C_COMPILER=`which gcc` -DCMAKE_CXX_COMPILER=`which g++` -DCMAKE_INSTALL_PREFIX=$(PKGROOT) ..  \
+	  cd $(SOURCE_DIR); \
+	  $(MODULE_LOAD_CMAKE); \
+	  mkdir build; \
+	  cd build; \
+	  cmake -DCMAKE_C_COMPILER=`which gcc` \
+	        -DCMAKE_CXX_COMPILER=`which g++` \
+	        -DCMAKE_INSTALL_PREFIX=$(PKGROOT) .. \
 	)
 	@echo "::: Package $(NAME) build complete :::"
 	
 install::
-	mkdir -p $(ROOT)/$(PKGROOT)/data
-	mkdir -p $(ROOT)/$(PKGROOT)/examples
+	NUM_CORES=$(shell "/usr/bin/lscpu | /bin/awk '/^CPU\(s\):/ {print $2}'")
+	mkdir -p -m 755 $(ROOT)/$(PKGROOT)/data
+	mkdir -p -m 755 $(ROOT)/$(PKGROOT)/examples
 	$(PKGROOT_BIND_MOUNT)
-	(  \
-                $(MODULE_LOAD_CMAKE); \
-		cd $(SOURCE_DIR)/build; \
-                make; \
-		make install; \
-                cd ../..; \
-                cp -r $(SOURCE_DIR)/examples/* $(PKGROOT)/examples; \
-                cp -r $(G4EMLOW_NAME)$(G4EMLOW_VERSION)/* $(PKGROOT)/data; \
-                cd $(PKGROOT)/examples/basic/B5; \
-                mkdir build; \
-                cd build; \
-                cmake -DGeant4_DIR=/opt/cern/geant/lib64/Geant4-9.6.2 -DCMAKE_C_COMPILER=`which gcc` -DCMAKE_CXX_COMPILER=`which g++` -DCMAKE_PREFIX_PATH=$(PKGROOT) ..; \
-                make \
-         )
+	( \
+	  $(MODULE_LOAD_CMAKE); \
+	  cd $(SOURCE_DIR)/build; \
+	  make -j$(NUM_CORES); \
+	  make -j$(NUM_CORES) install; \
+	  cd ../..; \
+	  cp -r $(SOURCE_DIR)/examples/* $(PKGROOT)/examples; \
+	  cp -r $(G4EMLOW_NAME)$(G4EMLOW_VERSION)/* $(PKGROOT)/data; \
+	  cd $(PKGROOT)/examples/basic/B5; \
+	  mkdir build; \
+	  cd build; \
+	  cmake -DGeant4_DIR=/opt/cern/geant/lib64/Geant4-9.6.2 \
+	        -DCMAKE_C_COMPILER=`which gcc` \
+	        -DCMAKE_CXX_COMPILER=`which g++` \
+	        -DCMAKE_PREFIX_PATH=$(PKGROOT) ..; \
+	  make -j$(NUM_CORES) \
+	)
 	$(PKGROOT_BIND_UMOUNT)
 	$(INSTALL_LICENSE_FILES)
 	@echo "::: Package $(NAME) install complete :::"

@@ -6,3 +6,4 @@ module-whatis "Description: cern applications"
 prepend-path PATH /opt/cern/root/bin:/opt/cern/geant/bin:/opt/cern/clhep/bin
 prepend-path LD_LIBRARY_PATH /opt/cern/root/lib/root:/opt/cern/geant/lib64:/opt/cern/clhep/lib/clhep
 setenv G4LEDATA /opt/cern/geant/data
+module load gnu
