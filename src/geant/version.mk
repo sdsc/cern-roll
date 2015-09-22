@@ -1,14 +1,14 @@
-NAME            = sdsc-geant
-VERSION         = 4.10.01
-RELEASE         = 1
-PKGROOT         = /opt/cern/geant
+NAME            = sdsc-geant4
+VERSION         = 10.01
+RELEASE         = 2
+PKGROOT         = /opt/cern/geant4
 
 SRC_SUBDIR      = geant
 
-SOURCE_NAME     = geant
+SOURCE_NAME     = geant4
 SOURCE_SUFFIX   = tar.gz
 SOURCE_VERSION  = $(VERSION)
-SOURCE_PKG      = $(SOURCE_NAME)$(SOURCE_VERSION).$(SOURCE_SUFFIX)
+SOURCE_PKG      = $(SOURCE_NAME).$(SOURCE_VERSION).$(SOURCE_SUFFIX)
 SOURCE_DIR      = $(SOURCE_PKG:%.$(SOURCE_SUFFIX)=%)
 
 G4EMLOW_NAME    = G4EMLOW

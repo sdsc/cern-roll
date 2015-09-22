@@ -14,7 +14,7 @@ All rights reserved. Rocks(r) v5.5/v6.0 www.rocksclusters.org
 </copyright>
 
 <package>sdsc-root</package>
-<package>sdsc-geant</package>
+<package>sdsc-geant4</package>
 <package>sdsc-clhep</package>
 <package>sdsc-cern-modules</package>
 <package>sdsc-cern-roll-test</package>
