@@ -83,7 +83,7 @@ build: $(SRC_DIRS)
 	  cmake -DCMAKE_C_COMPILER=`which gcc` \
 	        -DCMAKE_CXX_COMPILER=`which g++` \
 	        -DGEANT4_INSTALL_DATA=ON \
-	        -DGEANT4_INSTALL_DATADIR=$(PKGROOT)/share/Geant4-$(VERSION)/data \
+	        -DGEANT4_INSTALL_DATADIR=$(PKGROOT)/data \
 	        -DCMAKE_INSTALL_PREFIX=$(PKGROOT) .. \
 	)
 	@echo "::: Package $(NAME) build complete :::"
