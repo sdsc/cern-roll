@@ -9,7 +9,7 @@ use Test::More qw(no_plan);
 my $appliance = $#ARGV >= 0 ? $ARGV[0] :
                 -d '/export/rocks/install' ? 'Frontend' : 'Compute';
 my $installedOnAppliancesPattern = '.';
-my @packages = ('root', 'geant', 'clhep');
+my @packages = ('root', 'geant4', 'clhep');
 my $isInstalled = -d '/opt/cern';
 my $output;
 my $TESTFILE = 'tmpcern';
@@ -35,12 +35,11 @@ SKIP: {
   ok($count == 16, 'root works');
 }
 
-$packageHome = '/opt/cern/geant';
+$packageHome = '/opt/cern/geant4';
 SKIP: {
-  skip 'geant not installed', 1 if ! -d $packageHome;
-  skip 'geant test needs update';
+  skip 'geant4 not installed', 1 if ! -d $packageHome;
   $output = `module load cern; cd $packageHome/examples/basic/B5/build; ./exampleB5 ./exampleB5.in 2>&1`;
-  ok($output =~ /Total Energy \(MeV\)  : 2.481598204255104e-062.481598204255104e-06/, 'geant works');
+  ok($output =~ /Total Edep is 238.497/, 'geant4 works');
 }
 
 $packageHome = '/opt/cern/clhep';

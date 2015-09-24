@@ -82,6 +82,8 @@ build: $(SRC_DIRS)
 	  cd build; \
 	  cmake -DCMAKE_C_COMPILER=`which gcc` \
 	        -DCMAKE_CXX_COMPILER=`which g++` \
+	        -DGEANT4_INSTALL_DATA=ON \
+	        -DGEANT4_INSTALL_DATADIR=$(PKGROOT)/data \
 	        -DCMAKE_INSTALL_PREFIX=$(PKGROOT) .. \
 	)
 	@echo "::: Package $(NAME) build complete :::"
@@ -98,11 +100,11 @@ install::
 	  make -j$(NUM_CORES) install; \
 	  cd ../..; \
 	  cp -r $(SOURCE_DIR)/examples/* $(PKGROOT)/examples; \
-	  cp -r $(G4EMLOW_NAME)$(G4EMLOW_VERSION)/* $(PKGROOT)/data; \
+	  cp -r $(G4EMLOW_DIR)/* $(PKGROOT)/data; \
 	  cd $(PKGROOT)/examples/basic/B5; \
 	  mkdir build; \
 	  cd build; \
-	  cmake -DGeant4_DIR=/opt/cern/geant/lib64/Geant4-9.6.2 \
+	  cmake -DGeant4_DIR=$(PKGROOT)/lib64/Geant4-$(VERSION) \
 	        -DCMAKE_C_COMPILER=`which gcc` \
 	        -DCMAKE_CXX_COMPILER=`which g++` \
 	        -DCMAKE_PREFIX_PATH=$(PKGROOT) ..; \
@@ -113,4 +115,4 @@ install::
 	@echo "::: Package $(NAME) install complete :::"
 
 clean::
-	rm -rf $(SRC_DIRS) DESCRIPTION LICENSE
+	rm -rf $(SOURCE_DIR) $(G4EMLOW_DIR) DESCRIPTION LICENSE
