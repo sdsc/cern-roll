@@ -38,7 +38,7 @@ SKIP: {
 $packageHome = '/opt/cern/geant4';
 SKIP: {
   skip 'geant4 not installed', 1 if ! -d $packageHome;
-  $output = `module load cern; cd $packageHome/examples/basic/B5/build; ./exampleB5 ./exampleB5.in 2>&1`;
+  $output = `mkdir $TESTFILE.geant4.dir; cd $TESTFILE.geant4.dir; /bin/cp -r $packageHome/examples/basic/B5/build/* .; module load cern; ./exampleB5 ./exampleB5.in 2>&1`;
   ok($output =~ /Total Edep is 238.497/, 'geant4 works');
 }
 
