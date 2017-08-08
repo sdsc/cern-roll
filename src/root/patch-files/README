@@ -1,0 +1,3 @@
+IntrusiveRefCntPtr.h.patch
+  Private class members are not visible to nested classes in recent C++
+  compilers. This patch makes a class member public to avoid compiler errors.

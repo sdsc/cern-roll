@@ -1,6 +1,6 @@
 NAME           = sdsc-root
 VERSION        = 6.02.05
-RELEASE        = 1
+RELEASE        = 2
 PKGROOT        = /opt/cern/root
 
 SRC_SUBDIR     = root

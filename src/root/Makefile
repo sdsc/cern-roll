@@ -76,9 +76,15 @@ LICENSE: $(SRC_DIRS)
 	echo gplv2.1 > $@
 
 build: $(SRC_DIRS)
+	patch $(SOURCE_DIR)/interpreter/llvm/src/include/llvm/ADT/IntrusiveRefCntPtr.h patch-files/IntrusiveRefCntPtr.h.patch
 	( \
 	  $(MODULE_LOAD_CC); \
 	  cd $(SOURCE_DIR); \
+	  F77installDir=`which $(F77) | sed 's#/$(F77)$$##' | sed 's#/bin$$##'`; \
+	  libgfortranbeginPath=`find $$F77installDir -name libgfortranbegin.a`; \
+	  if test -z "$$libgfortranbeginPath"; then \
+	    perl -pi -e '$$_ = "" if /libgfortranbegin.a/' config/* etc/vmc/*; \
+	  fi; \
 	  ./configure --prefix=$(PKGROOT) \
 	    --with-xpm-libdir=/usr/lib64 --enable-minuit2 \
 	    --enable-builtin-pcre; \
