@@ -1,6 +1,6 @@
 NAME           = sdsc-clhep
 VERSION        = 2.2.0.5
-RELEASE        = 1
+RELEASE        = 2
 PKGROOT        = /opt/cern/clhep
 
 SRC_SUBDIR     = clhep

@@ -1,6 +1,6 @@
 NAME            = sdsc-geant4
 VERSION         = 10.01
-RELEASE         = 2
+RELEASE         = 3
 PKGROOT         = /opt/cern/geant4
 
 SRC_SUBDIR      = geant
