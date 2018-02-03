@@ -14,3 +14,4 @@ SOURCE_DIR     = $(SOURCE_VERSION)
 TGZ_PKGS       = $(SOURCE_PKG)
 
 RPM.EXTRAS     = AutoReq:No
+RPM.PREFIX     = $(PKGROOT)

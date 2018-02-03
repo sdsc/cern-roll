@@ -10,3 +10,4 @@ VERSION_INC = version.inc
 include $(VERSION_INC)
 
 RPM.EXTRAS  = AutoReq:No
+RPM.PREFIX  = $(PKGROOT)
