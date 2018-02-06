@@ -19,5 +19,5 @@ G4EMLOW_DIR     = $(G4EMLOW_NAME)$(G4EMLOW_VERSION)
 
 TAR_GZ_PKGS     = $(SOURCE_PKG) $(G4EMLOW_PKG)
 
-RPM.EXTRAS      = AutoReq:No
+RPM.EXTRAS      = AutoReq:No\nAutoProv:no
 RPM.PREFIX      = $(PKGROOT)
