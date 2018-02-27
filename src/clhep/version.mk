@@ -1,6 +1,6 @@
 NAME           = sdsc-clhep
 VERSION        = 2.2.0.5
-RELEASE        = 1
+RELEASE        = 2
 PKGROOT        = /opt/cern/clhep
 
 SRC_SUBDIR     = clhep
@@ -13,4 +13,5 @@ SOURCE_DIR     = $(SOURCE_VERSION)
 
 TGZ_PKGS       = $(SOURCE_PKG)
 
-RPM.EXTRAS     = AutoReq:No
+RPM.EXTRAS     = AutoReq:No\nAutoProv:no
+RPM.PREFIX     = $(PKGROOT)

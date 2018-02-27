@@ -1,6 +1,6 @@
 NAME            = sdsc-geant4
 VERSION         = 10.01
-RELEASE         = 2
+RELEASE         = 3
 PKGROOT         = /opt/cern/geant4
 
 SRC_SUBDIR      = geant
@@ -19,4 +19,5 @@ G4EMLOW_DIR     = $(G4EMLOW_NAME)$(G4EMLOW_VERSION)
 
 TAR_GZ_PKGS     = $(SOURCE_PKG) $(G4EMLOW_PKG)
 
-RPM.EXTRAS      = AutoReq:No
+RPM.EXTRAS      = AutoReq:No\nAutoProv:no
+RPM.PREFIX      = $(PKGROOT)
