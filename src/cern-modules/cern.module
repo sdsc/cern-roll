@@ -4,7 +4,7 @@ module-whatis "Version: VERSION"
 module-whatis "Description: cern applications"
 
 prepend-path PATH /opt/cern/root/bin:/opt/cern/geant4/bin:/opt/cern/clhep/bin
-prepend-path LD_LIBRARY_PATH /opt/cern/root/lib/root:/opt/cern/geant4/lib64:/opt/cern/clhep/lib/clhep
+prepend-path LD_LIBRARY_PATH /opt/cern/root/lib:/opt/cern/geant4/lib64:/opt/cern/clhep/lib/clhep
 setenv G4LEDATA /opt/cern/geant4/data
 setenv G4NEUTRONHPDATA /opt/cern/geant4/data/G4NDL4.5
 setenv G4LEDATA /opt/cern/geant4/data/G4EMLOW6.41
