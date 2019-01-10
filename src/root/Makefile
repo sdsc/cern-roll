@@ -78,33 +78,31 @@ LICENSE: $(SRC_DIRS)
 
 build: $(SRC_DIRS)
 	( \
+          $(MODULE_LOAD_CMAKE); \
 	  $(MODULE_LOAD_CC); \
-	  cd $(SOURCE_DIR); \
-	  F77installDir=`which $(F77) | sed 's#/$(F77)$$##' | sed 's#/bin$$##'`; \
-	  libgfortranbeginPath=`find $$F77installDir -name libgfortranbegin.a`; \
-	  if test -z "$$libgfortranbeginPath"; then \
-	    perl -pi -e '$$_ = "" if /libgfortranbegin.a/' config/* etc/vmc/*; \
-	  fi; \
-	  ./configure --prefix=$(PKGROOT) \
-	    --with-xpm-libdir=/usr/lib64 --enable-minuit2 \
-	    --enable-builtin-pcre; \
+          export CC=$(CC); \
+          export CXX=$(CXX); \
+          export FC=$(FC); \
+          export F77=$(F77); \
+          cd $(SOURCE_DIR); \
+          mkdir buildit; \
+          cd buildit; \
+          cmake -DCMAKE_INSTALL_PREFIX=$(PKGROOT) ..; \
 	  $(MAKE) -j 16 \
 	)
 	@echo "::: Package $(NAME) build complete :::"
 	
 install::
-	NUM_CORES=$(shell "/usr/bin/lscpu | /bin/awk '/^CPU\(s\):/ {print $2}'")
-	mkdir -p -m 755 $(ROOT)/$(PKGROOT)/test
+	mkdir -p -m 755 $(ROOT)/$(PKGROOT)
 	$(PKGROOT_BIND_MOUNT)
 	( \
 	  $(MODULE_LOAD_CC); \
-	  cd $(SOURCE_DIR); \
-	  $(MAKE) -j$(NUM_CORES) install; \
-	  cd test; \
-	  export PATH=$(PKGROOT)/bin:$${PATH}; \
-	  export LD_LIBRARY_PATH=$(PKGROOT)/lib/root:$${LD_LIBRARY_PATH}; \
-	  make -j$(NUM_CORES); \
-	  cp -r * $(PKGROOT)/test \
+          export CC=$(CC); \
+          export CXX=$(CXX); \
+          export FC=$(FC); \
+          export F77=$(F77); \
+	  cd $(SOURCE_DIR)/buildit; \
+	  $(MAKE) -j 16 install; \
 	)
 	$(PKGROOT_BIND_UMOUNT)
 	$(INSTALL_LICENSE_FILES)
