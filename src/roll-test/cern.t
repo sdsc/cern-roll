@@ -46,7 +46,7 @@ $packageHome = '/opt/cern/clhep';
 SKIP: {
   skip 'clhep not installed', 1 if ! -d $packageHome;
   `module load cern; $packageHome/tests/testMatrix >& $TESTFILE.clhep.out`;
-  $output = `diff $packageHome/tests/testMatrix.output $TESTFILE.clhep.out`;
+  $output = `diff -b $packageHome/tests/testMatrix.output $TESTFILE.clhep.out`;
   ok($output eq "", 'clhep works');
 }
 
