@@ -93,8 +93,8 @@ install::
 	$(PKGROOT_BIND_MOUNT)
 	(  \
 	  cd $(VERSION)/build; \
-	  make -j$(NUM_CORES); \
-	  make -j$(NUM_CORES)install; \
+	  $(MAKE) -j 16; \
+	  $(MAKE) -j 16 install; \
 	  cp Matrix/test/test* $(ROOT)/$(PKGROOT)/tests; \
 	  cp ../CLHEP/Matrix/test/testMatrix.output $(ROOT)/$(PKGROOT)/tests \
 	)
