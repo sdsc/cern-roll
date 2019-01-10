@@ -105,7 +105,7 @@ install::
 	  $(MAKE) -j 16 install; \
           cd $(PKGROOT)/test; \
           export PATH=$(PKGROOT)/bin:$${PATH}; \
-          export LD_LIBRARY_PATH=$(PKGROOT)/lib/root:$${LD_LIBRARY_PATH}; \
+          export LD_LIBRARY_PATH=$(PKGROOT)/lib:$${LD_LIBRARY_PATH}; \
           make -j 16 \
 	)
 	$(PKGROOT_BIND_UMOUNT)
