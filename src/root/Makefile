@@ -77,7 +77,6 @@ LICENSE: $(SRC_DIRS)
 	echo gplv2.1 > $@
 
 build: $(SRC_DIRS)
-	patch $(SOURCE_DIR)/interpreter/llvm/src/include/llvm/ADT/IntrusiveRefCntPtr.h patch-files/IntrusiveRefCntPtr.h.patch
 	( \
 	  $(MODULE_LOAD_CC); \
 	  cd $(SOURCE_DIR); \
