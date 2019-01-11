@@ -90,15 +90,14 @@ build: $(SRC_DIRS)
 	@echo "::: Package $(NAME) build complete :::"
 	
 install::
-	NUM_CORES=$(shell "/usr/bin/lscpu | /bin/awk '/^CPU\(s\):/ {print $2}'")
 	mkdir -p -m 755 $(ROOT)/$(PKGROOT)/data
 	mkdir -p -m 755 $(ROOT)/$(PKGROOT)/examples
 	$(PKGROOT_BIND_MOUNT)
 	( \
 	  $(MODULE_LOAD_CMAKE); \
 	  cd $(SOURCE_DIR)/build; \
-	  make -j$(NUM_CORES); \
-	  make -j$(NUM_CORES) install; \
+	  make -j 16; \
+	  make -j 16 install; \
 	  cd ../..; \
 	  cp -r $(SOURCE_DIR)/examples/* $(PKGROOT)/examples; \
 	  cp -r $(G4EMLOW_DIR)/* $(PKGROOT)/data; \
